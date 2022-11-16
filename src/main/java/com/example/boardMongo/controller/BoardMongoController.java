@@ -74,93 +74,93 @@ public class BoardMongoController {
         return map;
     }
 	
-	@RequestMapping(value="/add.do", method=RequestMethod.POST)
-	@ResponseBody
-    public Map<String, Object> add(@RequestParam(value="title", required=true) String title,
-			@RequestParam(value="contents", required=false, defaultValue="") String contents,
-			@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
-		System.out.println("add=====");		
-		Map<String, Object> map = new HashMap<>();
-		
-		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd hh:mm");
-		Date time = new Date();				
-		String ymd = format1.format(time);
-
-		try{
-			String repository = env.getProperty("user.file.upload");
-			String fname = "";
-			if( file != null && file.getSize() > 0 ) {
-				fname = file.getOriginalFilename();
-				FileOutputStream fos = new FileOutputStream(new File(repository+File.separator+fname));
-				IOUtils.copy(file.getInputStream(), fos);
-				fos.close();
-			}
-			
-			Board in = new Board();
-			in.setTitle(title);
-			in.setContents(contents);
-			in.setFname(fname);
-			in.setDate(ymd);
-			boardRepository.insert(in);
-			
-			map.put("returnCode", "success");
-			map.put("returnDesc", "");
-		}catch(Exception e){
-			map.put("returnCode", "failed");
-			map.put("returnDesc", "데이터 등록에 실패하였습니다.");
-		}
-		        
-        return map;
-    }
+//	@RequestMapping(value="/add.do", method=RequestMethod.POST)
+//	@ResponseBody
+//    public Map<String, Object> add(@RequestParam(value="title", required=true) String title,
+//			@RequestParam(value="contents", required=false, defaultValue="") String contents,
+//			@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
+//		System.out.println("add=====");
+//		Map<String, Object> map = new HashMap<>();
+//
+//		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd hh:mm");
+//		Date time = new Date();
+//		String ymd = format1.format(time);
+//
+//		try{
+//			String repository = env.getProperty("user.file.upload");
+//			String fname = "";
+//			if( file != null && file.getSize() > 0 ) {
+//				fname = file.getOriginalFilename();
+//				FileOutputStream fos = new FileOutputStream(new File(repository+File.separator+fname));
+//				IOUtils.copy(file.getInputStream(), fos);
+//				fos.close();
+//			}
+//
+//			Board in = new Board();
+//			in.setTitle(title);
+//			in.setContents(contents);
+//			in.setFname(fname);
+//			in.setDate(ymd);
+//			boardRepository.insert(in);
+//
+//			map.put("returnCode", "success");
+//			map.put("returnDesc", "");
+//		}catch(Exception e){
+//			map.put("returnCode", "failed");
+//			map.put("returnDesc", "데이터 등록에 실패하였습니다.");
+//		}
+//
+//        return map;
+//    }
 	
-	@RequestMapping(value="/add2.do", method=RequestMethod.POST)
-	@ResponseBody
-    public Map<String, Object> add2(@RequestParam(value="title", required=true) String title,
-			@RequestParam(value="contents", required=false, defaultValue="") String contents,
-			@RequestParam(value="file", required=false) List<MultipartFile> files) throws Exception {
-		System.out.println("add2=====");		
-		Map<String, Object> map = new HashMap<>();
-		
-		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd hh:MM");				
-		Date time = new Date();				
-		String ymd = format1.format(time);
-
-		try{
-			String repository = env.getProperty("user.file.upload");
-			String fnames = "";
-			for(MultipartFile file : files){
-				if( file != null && file.getSize() > 0 ) {
-					String fname = file.getOriginalFilename();
-					System.out.println("fname:"+fname);
-					FileOutputStream fos = new FileOutputStream(new File(repository+File.separator+fname));
-					IOUtils.copy(file.getInputStream(), fos);
-					fos.close();
-					
-					if( "".equals(fnames) ){
-						fnames = fname;
-					}else{
-						fnames += ","+fname;
-					}
-				}
-			}
-			
-			Board in = new Board();
-			in.setTitle(title);
-			in.setContents(contents);
-			in.setFname(fnames);
-			in.setDate(ymd);
-			boardRepository.insert(in);
-			
-			map.put("returnCode", "success");
-			map.put("returnDesc", "");
-		}catch(Exception e){
-			map.put("returnCode", "failed");
-			map.put("returnDesc", "데이터 등록에 실패하였습니다.");
-		}
-		        
-        return map;
-    }
-	
+//	@RequestMapping(value="/add2.do", method=RequestMethod.POST)
+//	@ResponseBody
+//    public Map<String, Object> add2(@RequestParam(value="title", required=true) String title,
+//			@RequestParam(value="contents", required=false, defaultValue="") String contents,
+//			@RequestParam(value="file", required=false) List<MultipartFile> files) throws Exception {
+//		System.out.println("add2=====");
+//		Map<String, Object> map = new HashMap<>();
+//
+//		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd hh:MM");
+//		Date time = new Date();
+//		String ymd = format1.format(time);
+//
+//		try{
+//			String repository = env.getProperty("user.file.upload");
+//			String fnames = "";
+//			for(MultipartFile file : files){
+//				if( file != null && file.getSize() > 0 ) {
+//					String fname = file.getOriginalFilename();
+//					System.out.println("fname:"+fname);
+//					FileOutputStream fos = new FileOutputStream(new File(repository+File.separator+fname));
+//					IOUtils.copy(file.getInputStream(), fos);
+//					fos.close();
+//
+//					if( "".equals(fnames) ){
+//						fnames = fname;
+//					}else{
+//						fnames += ","+fname;
+//					}
+//				}
+//			}
+//
+//			Board in = new Board();
+//			in.setTitle(title);
+//			in.setContents(contents);
+//			in.setFname(fnames);
+//			in.setDate(ymd);
+//			boardRepository.insert(in);
+//
+//			map.put("returnCode", "success");
+//			map.put("returnDesc", "");
+//		}catch(Exception e){
+//			map.put("returnCode", "failed");
+//			map.put("returnDesc", "데이터 등록에 실패하였습니다.");
+//		}
+//
+//        return map;
+//    }
+//
 	@RequestMapping(value="/mod.do", method=RequestMethod.POST)
 	@ResponseBody
     public Map<String, Object> mod(@RequestParam(value="id", required=true) String id,
